@@ -1,0 +1,87 @@
+insert into room values (
+1001, 1, 4, 'President', 0);
+
+insert into room values (
+1002, 2, 5, 'President', 1);
+
+insert into room values (
+1003, 3, 1, 'Suite', 0);
+
+insert into room values (
+1004, 4, 2, 'Suite', 1);
+
+insert into room values (
+1005, 5, 1, 'Extra bed', 0);
+
+insert into room values (
+1006, 6, 2, 'Extra bed', 1);
+
+insert into room values (
+1007, 7, 1, 'Triple', 0);
+
+insert into room values (
+1008, 8, 2, 'Triple', 1);
+
+insert into room values (
+1009, 9, 1, 'Business', 0);
+
+insert into room values (
+1010, 10, 2, 'Business', 1);
+
+insert into room values (
+1011, 11, 4, 'Family studio', 0);
+
+insert into room values (
+1012, 12, 5, 'Family studio', 1);
+
+insert into room values (
+1013, 13, 2, 'De luxe', 0);
+
+insert into room values (
+1014, 14, 3, 'De luxe', 1);
+
+select * from room;
+
+insert into prise values (
+1, 10000, 'President'
+);
+insert into prise values (
+1, 8000, 'De luxe'
+);
+insert into prise values (
+1, 6000, 'Suite'
+);
+insert into prise values (
+1, 600, 'Extra bed'
+);
+insert into prise values (
+1, 1000, 'Triple'
+);
+insert into prise values (
+1, 2000, 'Business'
+);
+insert into prise values (
+1, 3000, 'Family studio'
+);
+
+select * from prise;
+
+CREATE TABLE full
+  SELECT r.idRoom, r.NumRoom, r.Seats, r.Class, r.Busy, p.Time_pr, p.Prise 
+  FROM room r
+  JOIN prise p 
+  ON p.Class = r.Class;
+
+select * from full;
+select * from client;
+select * from results;
+
+
+CREATE TABLE results
+ select f.Class, f.NumRoom, c.FullName, c.Time,
+ f.Prise*c.Time as TotalyPrice from full f
+ join client c on f.Class = c.Class_cl
+ where f.Seats = c.Seats_cl and f.Busy = 0 
+ order by f.Prise desc;
+select * from results;
+drop table results;
